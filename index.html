@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GOBAK CHAT EKRANI</title>
+    <title>gobak</title>
     <style>
-        /* Genel Ayarlar ve Siber Tema */
+        /* Uzay Arka Planı ve Genel Ayarlar */
         body {
             margin: 0;
             padding: 0;
-            background-color: #050505;
-            color: #00ffff;
-            font-family: 'Courier New', Courier, monospace;
+            background: radial-gradient(circle at center, #1b2735 0%, #090a0f 100%);
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             overflow: hidden;
             display: flex;
             flex-direction: column;
@@ -21,8 +21,8 @@
             user-select: none;
         }
 
-        /* Matrix Arka Plan */
-        canvas#matrix {
+        /* Yıldız Efektleri için Canvas */
+        canvas#space {
             position: absolute;
             top: 0;
             left: 0;
@@ -33,252 +33,266 @@
         .title-container {
             z-index: 1;
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 50px;
         }
 
         h1 {
-            font-size: 4.5rem;
+            font-size: 5rem;
             margin: 0;
-            text-shadow: 0 0 10px #00ffff, 0 0 20px #0099ff, 0 0 40px #0099ff;
-            letter-spacing: 2px;
-            animation: pulse 2s infinite alternate;
+            background: -webkit-linear-gradient(#fff, #a0c4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(160, 196, 255, 0.5);
+            letter-spacing: 3px;
+            font-weight: 900;
         }
 
-        @keyframes pulse {
-            0% { text-shadow: 0 0 10px #00ffff, 0 0 20px #0099ff; transform: scale(1); }
-            100% { text-shadow: 0 0 20px #00ffff, 0 0 40px #0099ff, 0 0 60px #00ffff; transform: scale(1.02); }
-        }
-
-        /* Dinazor Oyunu Alanı */
-        #game {
-            width: 600px;
-            height: 200px;
-            border: 3px solid #00ffff;
-            border-radius: 10px;
-            position: relative;
-            background-color: rgba(0, 20, 40, 0.6);
+        /* Orijinal Tarzda Dinazor Oyunu Alanı */
+        #game-container {
             z-index: 1;
-            overflow: hidden;
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+            background-color: #f7f7f7; /* Chrome'un klasik gri/beyaz arka planı */
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            position: relative;
         }
 
-        /* Dinazor (Kare) */
-        #dino {
-            width: 40px;
-            height: 40px;
-            background-color: #00ffff;
+        canvas#dinoGame {
+            background-color: transparent;
+            display: block;
+        }
+
+        #game-over-text {
             position: absolute;
-            top: 160px;
-            left: 50px;
-            box-shadow: 0 0 15px #00ffff;
-            border-radius: 5px;
-        }
-
-        /* Engel (Kaktüs) */
-        #cactus {
-            width: 20px;
-            height: 40px;
-            background-color: #ff3300; /* Çarpıcı turuncu/kırmızı */
-            position: absolute;
-            top: 160px;
-            left: 600px;
-            box-shadow: 0 0 10px #ff3300;
-            border-radius: 3px;
-        }
-
-        /* Zıplama Animasyonu */
-        .jump {
-            animation: jumpAnim 0.6s linear;
-        }
-
-        @keyframes jumpAnim {
-            0% { top: 160px; }
-            40% { top: 60px; }
-            50% { top: 60px; }
-            60% { top: 60px; }
-            100% { top: 160px; }
-        }
-
-        /* Engel Hareketi */
-        .move {
-            animation: moveAnim 1.2s infinite linear;
-        }
-
-        @keyframes moveAnim {
-            0% { left: 600px; }
-            100% { left: -20px; }
-        }
-
-        /* Skor ve Mesajlar */
-        #scoreBoard {
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #ffffff;
-            text-shadow: 0 0 5px #00ffff;
-        }
-
-        #message {
-            position: absolute;
-            top: 50%;
+            top: 40%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 1.5rem;
-            color: #ff3300;
+            color: #535353;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 24px;
             font-weight: bold;
-            text-shadow: 0 0 10px #ff0000;
             display: none;
             text-align: center;
         }
-        
-        .start-text {
+
+        .info-text {
             position: absolute;
-            bottom: -30px;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
             font-size: 1.2rem;
-            color: #aaa;
+            color: #a0c4ff;
+            text-shadow: 0 0 5px rgba(160, 196, 255, 0.8);
+            white-space: nowrap;
         }
     </style>
 </head>
 <body>
 
-    <!-- Arka Plan Efekti -->
-    <canvas id="matrix"></canvas>
+    <canvas id="space"></canvas>
 
-    <!-- Ana Başlık -->
     <div class="title-container">
-        <h1>GOBAK CHATİ AÇSAKMI YA :D</h1>
+        <h1>ELBET BİR GÜN AÇILACAK 🕊️</h1>
     </div>
 
-    <!-- Oyun Alanı -->
-    <div id="game">
-        <div id="scoreBoard">Skor: <span id="score">0</span></div>
-        <div id="message">YANDIN!<br>Tekrar başlamak için tıkla</div>
-        <div id="dino"></div>
-        <div id="cactus"></div>
+    <div id="game-container">
+        <div id="game-over-text">OYUN BİTTİ &nbsp; SEN BOTSUN KNK<br><span style="font-size: 14px; cursor:pointer;">Tekrar oynamak için tıkla</span></div>
+        <canvas id="dinoGame" width="600" height="150"></canvas>
+        <div class="info-text">Zıplamak için Ekrana tıkla knk tmmi??? 🙂😖😣!</div>
     </div>
-    <div class="start-text">Zıplamak için BOŞLUK (Space) tuşuna bas!</div>
 
     <script>
-        // --- MATRİX ARKA PLAN EFEKTİ ---
-        const canvas = document.getElementById('matrix');
-        const ctx = canvas.getContext('2d');
+        // --- UZAY ARKA PLAN EFEKTİ ---
+        const spaceCanvas = document.getElementById('space');
+        const sCtx = spaceCanvas.getContext('2d');
+        spaceCanvas.width = window.innerWidth;
+        spaceCanvas.height = window.innerHeight;
 
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*";
-        const fontSize = 16;
-        const columns = canvas.width / fontSize;
-        const drops = Array.from({ length: columns }).fill(1);
-
-        function drawMatrix() {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            ctx.fillStyle = '#0f0'; // Varsayılan renk ayarlıyoruz ama aşağıda değiştireceğiz
-            ctx.font = fontSize + 'px Courier New';
-
-            for (let i = 0; i < drops.length; i++) {
-                const text = letters.charAt(Math.floor(Math.random() * letters.length));
-                // Siber tema için renk (Mavi - Camgöbeği)
-                ctx.fillStyle = Math.random() > 0.5 ? '#00ffff' : '#0077ff'; 
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                    drops[i] = 0;
-                }
-                drops[i]++;
-            }
+        const stars = [];
+        for (let i = 0; i < 200; i++) {
+            stars.push({
+                x: Math.random() * spaceCanvas.width,
+                y: Math.random() * spaceCanvas.height,
+                radius: Math.random() * 1.5,
+                speed: Math.random() * 0.5 + 0.1
+            });
         }
-        setInterval(drawMatrix, 33);
+
+        function drawSpace() {
+            sCtx.clearRect(0, 0, spaceCanvas.width, spaceCanvas.height);
+            sCtx.fillStyle = '#ffffff';
+            stars.forEach(star => {
+                sCtx.beginPath();
+                sCtx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                sCtx.fill();
+                
+                // Yıldızları sola doğru hareket ettir (Uçuş hissi)
+                star.x -= star.speed;
+                if (star.x < 0) {
+                    star.x = spaceCanvas.width;
+                    star.y = Math.random() * spaceCanvas.height;
+                }
+            });
+            requestAnimationFrame(drawSpace);
+        }
+        drawSpace();
 
         window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+            spaceCanvas.width = window.innerWidth;
+            spaceCanvas.height = window.innerHeight;
         });
 
-        // --- DİNAZOR OYUNU ---
-        const dino = document.getElementById("dino");
-        const cactus = document.getElementById("cactus");
-        const scoreElement = document.getElementById("score");
-        const message = document.getElementById("message");
-        
-        let isJumping = false;
-        let isGameOver = false;
+        // --- KLASİK DİNOZOR OYUNU KLONU ---
+        const dinoCanvas = document.getElementById('dinoGame');
+        const ctx = dinoCanvas.getContext('2d');
+        const gameOverText = document.getElementById('game-over-text');
+
+        // Oyun Değişkenleri
+        let frames = 0;
         let score = 0;
-        let scoreInterval;
+        let isGameOver = false;
+        let gameSpeed = 5;
 
-        function jump() {
-            if (isJumping || isGameOver) return;
-            isJumping = true;
-            dino.classList.add("jump");
-            setTimeout(() => {
-                dino.classList.remove("jump");
-                isJumping = false;
-            }, 600); // CSS animasyon süresi ile eşleşmeli
-        }
+        // Dinozor Özellikleri
+        const dino = {
+            x: 50,
+            y: 100,
+            width: 40,
+            height: 43,
+            dy: 0,
+            gravity: 0.6,
+            jumpPower: -10,
+            isJumping: false,
+            draw() {
+                ctx.fillStyle = '#535353'; // Orijinal Chrome gri rengi
+                // Basit bir dinozor şekli çizimi
+                ctx.fillRect(this.x, this.y, this.width, this.height);
+                ctx.fillRect(this.x + 20, this.y - 10, 20, 20); // Kafa
+            },
+            jump() {
+                if (!this.isJumping) {
+                    this.dy = this.jumpPower;
+                    this.isJumping = true;
+                }
+            },
+            update() {
+                this.y += this.dy;
+                this.dy += this.gravity;
 
-        function startGame() {
-            if (!isGameOver && cactus.classList.contains("move")) return;
-            
-            isGameOver = false;
-            score = 0;
-            scoreElement.innerText = score;
-            message.style.display = "none";
-            cactus.style.left = "600px";
-            cactus.classList.add("move");
-
-            clearInterval(scoreInterval);
-            scoreInterval = setInterval(() => {
-                score++;
-                scoreElement.innerText = score;
-            }, 100);
-        }
-
-        function gameOver() {
-            isGameOver = true;
-            cactus.classList.remove("move");
-            message.style.display = "block";
-            clearInterval(scoreInterval);
-        }
-
-        // Çarpışma Kontrolü
-        setInterval(() => {
-            if (isGameOver) return;
-
-            let dinoTop = parseInt(window.getComputedStyle(dino).getPropertyValue("top"));
-            let cactusLeft = parseInt(window.getComputedStyle(cactus).getPropertyValue("left"));
-
-            // Dinazor ile kaktüs çarpışıyorsa (x ve y ekseninde)
-            if (cactusLeft < 90 && cactusLeft > 50 && dinoTop >= 120) {
-                gameOver();
+                // Zemin sınırını kontrol et
+                if (this.y >= 100) {
+                    this.y = 100;
+                    this.dy = 0;
+                    this.isJumping = false;
+                }
+                this.draw();
             }
-        }, 10);
+        };
+
+        // Kaktüs (Engeller) Özellikleri
+        const obstacles = [];
+        class Cactus {
+            constructor() {
+                this.x = dinoCanvas.width;
+                this.width = 20 + Math.random() * 15;
+                this.height = 30 + Math.random() * 20;
+                this.y = 143 - this.height;
+            }
+            draw() {
+                ctx.fillStyle = '#535353';
+                ctx.fillRect(this.x, this.y, this.width, this.height);
+            }
+            update() {
+                this.x -= gameSpeed;
+                this.draw();
+            }
+        }
+
+        // Çarpışma Kontrolü ve Oyunu Çizme
+        function animateDinoGame() {
+            if (isGameOver) return;
+            requestAnimationFrame(animateDinoGame);
+            ctx.clearRect(0, 0, dinoCanvas.width, dinoCanvas.height);
+
+            // Zemin Çizgisi
+            ctx.beginPath();
+            ctx.moveTo(0, 143);
+            ctx.lineTo(dinoCanvas.width, 143);
+            ctx.strokeStyle = '#535353';
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+
+            // Skor Yazısı
+            ctx.fillStyle = '#535353';
+            ctx.font = '20px Courier New';
+            ctx.fillText(Math.floor(score).toString().padStart(5, '0'), 520, 30);
+
+            dino.update();
+
+            // Engel Oluşturma
+            if (frames % 100 === 0) {
+                obstacles.push(new Cactus());
+            }
+
+            for (let i = 0; i < obstacles.length; i++) {
+                obstacles[i].update();
+
+                // Çarpışma Kontrolü (Hitbox)
+                if (dino.x < obstacles[i].x + obstacles[i].width &&
+                    dino.x + dino.width > obstacles[i].x &&
+                    dino.y < obstacles[i].y + obstacles[i].height &&
+                    dino.y + dino.height > obstacles[i].y) {
+                    
+                    isGameOver = true;
+                    gameOverText.style.display = 'block';
+                }
+
+                // Ekrandan çıkan kaktüsü sil
+                if (obstacles[i].x + obstacles[i].width < 0) {
+                    obstacles.splice(i, 1);
+                    i--;
+                }
+            }
+
+            score += 0.05;
+            gameSpeed += 0.002; // Oyun gittikçe hızlanır
+            frames++;
+        }
+
+        // Oyunu Başlat / Yeniden Başlat
+        function resetGame() {
+            obstacles.length = 0;
+            score = 0;
+            frames = 0;
+            gameSpeed = 5;
+            dino.y = 100;
+            dino.dy = 0;
+            isGameOver = false;
+            gameOverText.style.display = 'none';
+            animateDinoGame();
+        }
 
         // Kontroller
-        document.addEventListener("keydown", function(event) {
-            if (event.code === "Space") {
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
                 if (isGameOver) {
-                    startGame();
+                    resetGame();
                 } else {
-                    jump();
+                    dino.jump();
                 }
             }
         });
 
-        document.addEventListener("mousedown", function() {
-            if (isGameOver) {
-                startGame();
+        document.getElementById('game-container').addEventListener('mousedown', () => {
+             if (isGameOver) {
+                resetGame();
             } else {
-                jump();
+                dino.jump();
             }
         });
 
-        // Sayfa yüklendiğinde kaktüsü hareket ettir
-        cactus.classList.add("move");
-        startGame();
+        // Oyunu İlk Açılışta Başlat
+        animateDinoGame();
     </script>
 </body>
 </html>
