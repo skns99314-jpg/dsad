@@ -457,7 +457,14 @@
                     await typeWriter(initText, 'result-data', 15);
                     
                     try {
-                        const response = await fetch(fetchUrl);
+const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(fetchUrl)}`;
+
+const response = await fetch(proxyUrl, {
+    method: "GET",
+    headers: {
+        "Content-Type": "application/json"
+    }
+});
                         if (!response.ok) throw new Error(`HTTP_${response.status}_YETKİSİZ_ERİŞİM`);
                         const data = await response.json();
                         
